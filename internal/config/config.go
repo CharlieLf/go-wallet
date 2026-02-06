@@ -3,13 +3,15 @@ package config
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	DBDSN string
-	Port  string
+	DBDSN  string
+	Port   string
+	APIKeys []string
 }
 
 func Load() Config {
@@ -19,11 +21,12 @@ func Load() Config {
 	}
 
 	return Config{
-		DBDSN: getEnv(
-			"DB_DSN",
-			"root:password@tcp(127.0.0.1:3306)/go_wallet?parseTime=true",
+		DBDSN: getEnv("DB_DSN", ""),
+		Port:  getEnv("PORT", "8080"),
+		APIKeys: strings.Split(
+			getEnv("API_KEYS", ""),
+			",",
 		),
-		Port: getEnv("PORT", "8080"),
 	}
 }
 

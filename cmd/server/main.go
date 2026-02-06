@@ -23,7 +23,7 @@ func main() {
 	service := wallet.NewService(repo)
 	handler := wallet.NewHandler(service)
 
-	r := router.Register(handler)
+	r := router.Register(cfg, handler)
 
 	log.Println("wallet api running on :" + cfg.Port)
 
